@@ -15,12 +15,14 @@ class PessoaSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     # Método create para salvar o usuário
-    def create(self, validated_data):
-        usuario = Pessoa(
-            nome=validated_data['nome'],
-            sobrenome=validated_data['sobrenome'],
-            senha=validated_data['senha'],
-            nick=validated_data['nick']
-        )
-        usuario.save()
-        return usuario
+    # (Não é necessário fazer isso para salvar, isso é usado apenas quando 
+    # você precisa manipular os dados de uma forma diferente)
+    # def create(self, validated_data):
+    #     usuario = Pessoa(
+    #         nome=validated_data['nome'],
+    #         sobrenome=validated_data['sobrenome'],
+    #         senha=validated_data['senha'],
+    #         nick=validated_data['nick']
+    #     )
+    #     usuario.save()
+    #     return usuario
