@@ -1,9 +1,11 @@
 from rest_framework import generics
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.response import Response
 from rest_framework import status
 from .models import Music, Pessoa
 from .serializers import MusicSerializer, PessoaSerializer
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
+from rest_framework.permissions import IsAuthenticated
 
 # Forma mais "engessada"(isso não quer dizer que seja ruim) que eu tinha falado do tutorial(https://medium.com/@marcosrabaioli/criando-uma-api-rest-utilizando-django-rest-framework-parte-1-55ac3e394fa)
 # Acesso: http://localhost:8000/musics/
@@ -42,9 +44,16 @@ def hello_world2(request):
 
 # Imprimindo informaçẽos específicas que são recebidas do request
 # Acesso: http://localhost:8000/pessoa1/
+
+
 @api_view(['POST'])
+# @permission_classes([IsAuthenticated])
+# @authentication_classes([SessionAuthentication, BasicAuthentication])
 def pessoa(request):
-    return Response({"Nome": request.data['nome'], "sobrenome": request.data['sobrenome'], "nick": request.data['nick']})
+    print("TESTE")
+    print(request.data['username'])
+    print(request.data['password'])
+    return Response({"username": "O desgraçado é um gênio", "password": request.data['password']})
 
 # Validando resposta e salvando no banco
 # Acesso: http://localhost:8000/pessoa2/
@@ -67,3 +76,10 @@ def pessoa3(request):
     pessoas = Pessoa.objects.all()
     serializer = PessoaSerializer(pessoas, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK) 
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def teste(request):
+    print(request.data)
+    return Response([{"Nome": "Carlos"}, {"Nome": "Joana"}])

@@ -7,7 +7,7 @@ class PessoaTests(APITestCase):
     # Todos os testes devem começar com test_
     def test_postando_pessoa(self):
         url = reverse('pessoa')
-        data = {'nome': 'Matheus', 'sobrenome': 'Roberto', 'nick':'Chaves'}
+        data = {'username': 'Matheus', 'password': 'Roberto'}
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
